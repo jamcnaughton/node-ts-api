@@ -1,0 +1,14 @@
+{
+  "name": "node-ts-api",
+  "version": "0.0.1",
+  "scripts": {
+
+  },
+  "private": true,
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
+}

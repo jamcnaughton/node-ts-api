@@ -1,0 +1,8 @@
+{
+    "out": "packages/api/doc",
+    "exclude": [
+        "**/*.e2e-spec*"
+    ],
+	"mode": "modules",
+	"theme": "minimal"
+}
