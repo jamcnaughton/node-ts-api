@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module endpoint
  */
 import * as Bluebird from 'bluebird';
@@ -20,7 +21,7 @@ export interface IAuth {
   tenant?: string;
 }
 
-// TODO Add more auth end points for handling sign ups and password resets.
+// TODO Feature: Add more auth end points for handling sign ups and password resets.
 
 // TODO Api Docs
 

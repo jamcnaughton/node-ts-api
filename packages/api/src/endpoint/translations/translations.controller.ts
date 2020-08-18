@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module endpoint
  */
 import * as Bluebird from 'bluebird';
@@ -16,8 +17,7 @@ import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 @JsonController('/translation')
 export class TranslationController {
 
-  // ------ Public Methods ------- //
-
+  
   /**
    * Get front-end translations for the sign-in pages.
    *

@@ -22,8 +22,7 @@ import {
 @Table
 export class DemoBackup extends Model<DemoBackup> {
 
-  // ------ Model Attributes ------- //
-
+  
   /**
    * A unique ID representing the backed up demo table.
    */

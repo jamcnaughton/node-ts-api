@@ -28,8 +28,7 @@ export class DemoService {
    */
   public static contentTables = ['DocumentContent', 'ImageContent', 'VideoContent'];
 
-  // ------ Public Methods ------- //
-
+  
   /**
    * Resets the demo tenant.
    *

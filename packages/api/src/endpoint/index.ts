@@ -13,8 +13,4 @@ export const controllers: Function[] = [
   TranslationController
 ];
 
-// TODO Fix more headers
-
-// TODO Remove all // ------
-
 // TODO Add end point tests.

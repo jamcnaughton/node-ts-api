@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module service
  */
 import * as Bluebird from 'bluebird';

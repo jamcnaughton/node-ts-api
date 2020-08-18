@@ -20,8 +20,7 @@ import {User} from '../user';
 @Table
 export class UserHasRole extends Model<UserHasRole> {
 
-  // ------ Model Attributes ------- //
-
+  
   /**
    * The ID of a role.
    */

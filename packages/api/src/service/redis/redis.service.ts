@@ -11,22 +11,19 @@ import {config} from '../../config';
  */
 export class RedisService {
 
-  // ------ Private Constants ------ //
-
+  
   /**
    * How long to wait for database to appear (in seconds).
    */
   private static reconnectTimeout = 10;
 
-  // ------ Public Global Variables ------ //
-
+  
   /**
    * The Redis client to communicate with.
    */
   public client: redis.RedisClient = null;
 
-  // ------ Public Methods ------ //
-
+  
   /**
    * Clears the Redis data store.
    *

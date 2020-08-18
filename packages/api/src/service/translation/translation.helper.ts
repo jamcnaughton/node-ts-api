@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module service
  */
 import * as Bluebird from 'bluebird';
@@ -10,8 +11,7 @@ import {translationService} from './translation.service';
  */
 export class TranslationHelper {
 
-  // ------ Private Global Variables ------- //
-
+  
   /**
    * The preferred language of the user this helper instance is affiliated with.
    */
@@ -22,8 +22,7 @@ export class TranslationHelper {
    */
   private translations: string[] = [];
 
-  // ------ Constructor ------- //
-
+  
   /**
    * Prepares an instance of the translation helper.
    *
@@ -35,8 +34,7 @@ export class TranslationHelper {
     private tenant: string
   ) {}
 
-  // ------ Public Methods ------- //
-
+  
   /**
    * Get the user's preferred language.
    *

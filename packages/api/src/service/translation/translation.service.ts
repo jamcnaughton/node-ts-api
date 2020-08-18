@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module service
  */
 import * as Bluebird from 'bluebird';
@@ -13,8 +14,7 @@ import {languageService} from '../language';
  */
 export class TranslationService {
 
-  // ------ Public Methods ------- //
-
+  
   /**
    * Returns all front-end translations for the sign-in pages for the supplied tenant.
    *

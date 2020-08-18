@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module service
  */
 export * from './translation.service';
