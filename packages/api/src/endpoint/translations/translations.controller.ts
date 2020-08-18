@@ -8,6 +8,8 @@ import {Tenant} from '../../decorators/tenant';
 import {translationService} from '../../service/translation';
 import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
+// TODO ApiDocs
+
 /**
  * A class which handles requests relating to text items.
  */

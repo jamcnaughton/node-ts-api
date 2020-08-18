@@ -9,9 +9,9 @@
 export interface IConfig {
 
   /**
-   * Object containing city information.
+   * Object containing account security configuration information.
    */
-  cities: ICity[];
+  accountSecurity: IAccountSecurityConfig;
 
   /**
    * Object containing CORS configuration information.
@@ -29,14 +29,26 @@ export interface IConfig {
   sql: ISqlInterface;
 
   /**
-   * The URL of the external API.
-   */
-  externalApiUrl: string;
-
-  /**
    * Object containing JWT configuration information.
    */
   jwt: IJwtConfig;
+
+}
+
+/**
+ * An interface representing an object containing account security configuration information.
+ */
+export interface IAccountSecurityConfig {
+
+  /**
+   * The number of attempts to unsuccessfully log in with the same e-mail allowed.
+   */
+  attemptsLimit: number;
+
+  /**
+   * The length of time a user should be locked out after reaching the limit on unsuccessful attempts to log in.
+   */
+  lockoutTime: number;
 
 }
 
@@ -59,28 +71,6 @@ export interface ICorsConfig {
    * The permitted request methods(s) to the API.
    */
   methods: string;
-
-}
-
-/**
- * An interface representing an object containing city information.
- */
-export interface ICity {
-
-  /**
-   * The city's name.
-   */
-  name: string;
-
-  /**
-   * The city's latitude.
-   */
-  latitude: number;
-
-  /**
-   * The city's latitude.
-   */
-  longitude: number;
 
 }
 
