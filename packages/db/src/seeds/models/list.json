@@ -10,8 +10,18 @@
     "timestamps": false
   },
   {
+    "tableName": "Role",
+    "modelName": "role",
+    "timestamps": false
+  },
+  {
     "tableName": "Translation",
     "modelName": "translation",
+    "timestamps": false
+  },
+  {
+    "tableName": "UserHasRole",
+    "modelName": "user-has-role",
     "timestamps": false
   }
 ]

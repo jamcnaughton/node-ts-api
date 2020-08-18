@@ -20,5 +20,26 @@ export const config: IConfig = {
     methods: process.env.CORS_METHODS,
     origins: process.env.CORS_ORIGINS
   },
-  externalApiUrl: process.env.EXTERNAL_API_URL
+  externalApiUrl: process.env.EXTERNAL_API_URL,
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: +process.env.REDIS_PORT
+  },
+  sql: {
+    database: process.env.DB_NAME,
+    dialect: process.env.DB_DIALECT,
+    dialectOptions: {
+      prependSearchPath: true,
+      ssl: false
+    },
+    host: process.env.DB_HOST,
+    operatorsAliases: false,
+    password: process.env.DB_PASS,
+    username: process.env.DB_USER,
+    validateOnly: false
+  },
+  jwt: {
+    duration: process.env.JWT_DURATION,
+    secret: process.env.JWT_SECRET
+  }
 };

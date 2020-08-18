@@ -1,0 +1,29 @@
+{
+  "userId": {
+    "primaryKey": true,
+    "allowNull": false,
+    "onDelete": "CASCADE",
+    "references": {
+      "model": {
+        "tableName": "User",
+        "schema": "{{TENANT}}"
+      },
+      "key": "id"
+    },
+    "isUUID": 4,
+    "type": "{{Sequelize.UUID}}"
+  },
+  "roleId": {
+    "primaryKey": true,
+    "allowNull": false,
+    "references": {
+      "model": {
+        "tableName": "Role",
+        "schema": "{{TENANT}}"
+      },
+      "key": "id"
+    },
+    "isUUID": 4,
+    "type": "{{Sequelize.UUID}}"
+  }
+}

@@ -2,4 +2,4 @@
  * @packageDocumentation
  * @module model
  */
-export * from './person.model';
+export * from './user-has-role.model';

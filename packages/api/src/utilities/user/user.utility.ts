@@ -2,7 +2,12 @@
  * @packageDocumentation
  * @module utilities
  */
+import * as Bluebird from 'bluebird';
 import {Action} from 'routing-controllers';
+import {IJwtAttributes} from '../../model/jwt';
+import {User} from '../../model/user';
+import {jwtService} from '../../service/jwt';
+import {userService} from '../../service/user';
 
 /**
  * Get information on a user making a request.
@@ -12,8 +17,15 @@ import {Action} from 'routing-controllers';
  */
 export function userUtility (action: Action): Promise<{}> {
 
-  // If user-information is required this can be added to later.
-  console.log(action.request);
-  return Promise.resolve({});
+  // Returns a promise which attempts to get information on the user the token belongs to.
+  return jwtService.readToken(action.request)
+  .then(
+    (token: IJwtAttributes) => {
+
+      // Returns a promise which gets the user information.
+      return <Bluebird<User>>userService.getUserFromToken(token);
+
+    }
+  );
 
 }

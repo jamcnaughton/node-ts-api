@@ -5,17 +5,12 @@
 import * as express from 'express';
 import * as helmet from 'helmet';
 import * as morgan from 'morgan';
-import fetch from 'node-fetch';
 import 'reflect-metadata';
 import {useExpressServer} from 'routing-controllers';
 import {config} from '../config';
 import {controllers} from '../endpoint';
 import {authorisationUtility} from '../utilities/authorisation';
 import {userUtility} from '../utilities/user';
-
-// Ensure fetch is globally available (helps with mocking during tests).
-declare var global: any;
-global.fetch = fetch;
 
 /**
  * Instance of NodeJS express service.
