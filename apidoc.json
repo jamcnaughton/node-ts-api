@@ -1,7 +1,7 @@
 {
-  "name": "City API",
+  "name": "Node TS API",
   "version": "1.0.0",
-  "description": "Documentation for the City API",
-  "title": "Documentation for the City API",
+  "description": "Documentation for the Node TS API",
+  "title": "Documentation for the Node TS API",
   "url" : "http://localhost:8080/api/1.0"
 }

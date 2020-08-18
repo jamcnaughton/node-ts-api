@@ -1,0 +1,38 @@
+{
+  "development": {
+    "database": "node-ts-api-dev",
+    "dialect": "postgres",
+    "host": "localhost",
+    "password": "database-password",
+    "username": "database-user",
+    "redis": {
+      "host": "127.0.0.1",
+      "port": 6379
+    },
+    "logging": false
+  },
+  "test": {
+    "database": "node-ts-api-dev",
+    "dialect": "postgres",
+    "host": "localhost",
+    "password": "database-password",
+    "username": "database-user",
+    "redis": {
+      "host": "127.0.0.1",
+      "port": 6379
+    },
+    "logging": false
+  },
+  "production": {
+    "database": "DB_NAME",
+    "dialect": "DB_DIALECT",
+    "host": "DB_HOST",
+    "password": "DB_PASS",
+    "username": "DB_USER",
+    "redis": {
+      "host": "REDIS_HOST",
+      "port": "REDIS_PORT"
+    },
+    "logging": false
+  }
+}

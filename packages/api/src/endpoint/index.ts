@@ -13,10 +13,8 @@ export const controllers: Function[] = [
 
 // TODO Add database (filtered to just translations and authentication)
 
-// TODO Remove people end point
+// TODO Remove people end point and related packages
+
+// TODO Remove references to old projects (city, etc).
 
 // TODO Add authentication
-
-// TODO Make migrations use TS
-
-// TODO Make migrations use promises

@@ -1,0 +1,16 @@
+{
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      
+      "packages/api/src/model/**",
+      "**/*.d.ts",
+      "**/*.js"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  }
