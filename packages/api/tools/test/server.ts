@@ -3,7 +3,6 @@
  * @module tools
  */
 // tslint:disable no-console ter-max-len
-import {join, resolve} from 'path';
 import * as SuperTest from 'supertest';
 import {app} from '../../src/bin';
 
@@ -50,10 +49,3 @@ export const server: Function = () => {
   );
 
 };
-
-/**
- * Function which makes an upload call.
- *
- * @param filename The file to upload.
- */
-export const upload: Function = (filename: string): string => resolve(join(__dirname, '../uploads', filename));

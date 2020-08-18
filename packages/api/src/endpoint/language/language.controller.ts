@@ -61,8 +61,6 @@ export class LanguageController {
     @Res() res: Response,
     @Tenant() tenant: string
   ): Bluebird<Response> {
-
-    // Returns a promise which attempts to find the languages affiliated with the unit.
     return languageService.read(tenant)
     .then(
       (languages: Language[]) => sendResultsResponse(res, {languages: languages})
@@ -70,7 +68,6 @@ export class LanguageController {
     .catch(
       (err: Error) => sendErrorResponse(res, err)
     );
-
   }
 
 }

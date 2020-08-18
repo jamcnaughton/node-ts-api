@@ -27,7 +27,7 @@ export function Tenant (): Function {
         // Define tenant string.
         let tenant: string;
         if (req.query && req.query.tenant) {
-          tenant = req.query.tenant;
+          tenant = req.query.tenant.toString();
         }
         if (req.body && req.body.tenant) {
           tenant = req.body.tenant;

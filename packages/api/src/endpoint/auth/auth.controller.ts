@@ -23,6 +23,8 @@ export interface IAuth {
 
 // TODO Feature: Add more auth end points for handling sign ups and password resets.
 
+// TODO Feature: Add tests for end point.
+
 // TODO Api Docs
 
 /**
@@ -73,6 +75,7 @@ export class AuthController {
     }) body: IAuth
   ): Bluebird<void | Response> {
 
+    // TODO Move all this logic into an auth service.
 
     // Check user has not exceeded log in attempts
     return userService.getLoginAttempts(body.email)

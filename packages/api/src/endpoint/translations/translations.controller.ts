@@ -9,6 +9,8 @@ import {Tenant} from '../../decorators/tenant';
 import {translationService} from '../../service/translation';
 import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
+// TODO Feature: Add tests for end point.
+
 // TODO ApiDocs
 
 /**
