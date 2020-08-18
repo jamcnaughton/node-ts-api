@@ -4,7 +4,7 @@
  */
 import {Response} from 'express';
 import {logService} from '../../service/log';
-import {buildErrorResponse, buildResponse} from './response.interface';
+import {buildErrorResponse, buildResultsResponse} from './response.interface';
 import {IServiceError} from './service-error.interface';
 
 /**
@@ -26,7 +26,7 @@ export function sendResultsResponse (
 ): Response {
 
   // Make the structured response.
-  const response = buildResponse(results, code, status, messages);
+  const response = buildResultsResponse(results, code, status, messages);
 
   // Return the response with the error details in it.
   return res.status(code).json(response);

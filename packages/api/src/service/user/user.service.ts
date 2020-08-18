@@ -34,6 +34,31 @@ export class UserService {
 
   }
 
+  /**
+   * Get a user's preferred language .
+   *
+   * @param id The ID of the user.
+   * @param tenant The tenant the user belongs to.
+   * @returns A promise which attempts to get the preferred language code of the user.
+   */
+  public getUserPreferredLanguage (id: string, tenant: string): Bluebird<string> {
+    return User.findOne(
+      {
+        attributes: [
+          'id',
+          'preferredLanguageId'
+        ],
+        searchPath: `"${tenant}"`,
+        where: {
+          id: id
+        }
+      }
+    )
+    .then(
+      (user: User) => user.preferredLanguageId
+    );
+  }
+
 }
 
 /**

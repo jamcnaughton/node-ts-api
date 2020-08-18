@@ -75,7 +75,7 @@ const statuses: any = {
  * @param messages The message to include in the response.
  * @returns An error response object.
  */
-export function buildResponse (
+export function buildResultsResponse (
   results: {},
   code: number = 200,
   status: string = null,

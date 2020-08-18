@@ -2,7 +2,7 @@
 
 // TODO Make migrations use promises
 
-// TODO Put all work into transactions.
+// TODO Put all changes to db in transactions.
 
 // Imports.
 const fs = require('fs');
