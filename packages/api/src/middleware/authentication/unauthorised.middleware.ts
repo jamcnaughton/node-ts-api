@@ -2,11 +2,7 @@
  * @packageDocumentation
  * @module middleware
  */
-import {
-  NextFunction,
-  Request,
-  Response
-} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import {ExpressMiddlewareInterface} from 'routing-controllers';
 import {buildServiceError, sendErrorResponse} from '../../utilities/response';
 

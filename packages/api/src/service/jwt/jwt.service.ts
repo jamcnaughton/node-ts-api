@@ -4,10 +4,7 @@
  */
 import * as Bluebird from 'bluebird';
 import {Request} from 'express';
-import {
-  sign,
-  verify
-} from 'jsonwebtoken';
+import {sign, verify} from 'jsonwebtoken';
 import {config} from '../../config';
 import {IJwtAttributes} from '../../model/jwt';
 import {buildServiceError} from '../../utilities/response';

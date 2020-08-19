@@ -3,16 +3,8 @@
  * @module endpoint
  */
 import * as Bluebird from 'bluebird';
-import {
-  Request,
-  Response
-} from 'express';
-import {
-  Get,
-  JsonController,
-  Req,
-  Res
-} from 'routing-controllers';
+import {Request, Response} from 'express';
+import {Get, JsonController, Req, Res} from 'routing-controllers';
 import {Tenant} from '../../decorators/tenant';
 import {Language} from '../../model/language';
 import {languageService} from '../../service/language';
@@ -61,7 +53,10 @@ export class LanguageController {
     @Res() res: Response,
     @Tenant() tenant: string
   ): Bluebird<Response> {
-    return languageService.read(tenant)
+    return Bluebird.resolve()
+    .then(
+      () => languageService.read(tenant)
+    )
     .then(
       (languages: Language[]) => sendResultsResponse(res, {languages: languages})
     )

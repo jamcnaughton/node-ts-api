@@ -2,11 +2,7 @@
  * @packageDocumentation
  * @module service
  */
-import {
-  compare,
-  genSalt,
-  hash
-} from 'bcrypt';
+import {compare, genSalt, hash} from 'bcrypt';
 
 /**
  * A service class which handles encryption related actions.

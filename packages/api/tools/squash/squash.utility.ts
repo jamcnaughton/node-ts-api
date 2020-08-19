@@ -4,14 +4,12 @@
  */
 // tslint:disable no-console
 import * as Bluebird from 'bluebird';
-import { exec } from 'child_process';
+import {exec} from 'child_process';
 import * as fs from 'fs';
 import {TenantInfo} from 'packages/api/src/model/tenant-info';
-import {
-  sequelize
-} from '../../src/model';
+import {sequelize} from '../../src/model';
 import {Template} from '../../src/model/template';
-import { wipeUtility } from '../wipe';
+import {wipeUtility} from '../wipe';
 
 /**
  * Class which handles squashing the database migrations.

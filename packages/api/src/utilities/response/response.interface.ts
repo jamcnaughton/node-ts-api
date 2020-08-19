@@ -113,6 +113,9 @@ export function buildErrorResponse (
     );
   }
 
+  // Override code if required.
+  code = (<IServiceError>error).restCode;
+
   // Return the response object.
   return <IResponse>{
     id: uuidv4(),

@@ -9,7 +9,7 @@ import {Unauthorised} from '../../middleware/authentication';
 import {authService} from '../../service/auth';
 import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
-// TODO Feature: Add more auth end points for handling sign ups and password resets.
+// TODO Feature: Add more auth end points for handling password resets.
 
 // TODO Feature: Add tests for end point.
 
@@ -60,7 +60,10 @@ export class AuthController {
     @Res() res: Response,
     @Body({required: true}) body: {}
   ): Bluebird<void | Response> {
-    return authService.attemptAuthentication(body)
+    return Bluebird.resolve()
+    .then(
+      () => authService.attemptAuthentication(body)
+    )
     .then(
       (token: string) => sendResultsResponse(res, {token: token})
     )

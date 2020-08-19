@@ -9,9 +9,9 @@
 export interface IServiceError {
 
   /**
-   * An optional array of details.
+   * Short hand string to ID the error.
    */
-  details?: string[];
+  errorString: string;
 
   /**
    * The error message.
@@ -23,6 +23,11 @@ export interface IServiceError {
    */
   restCode: number;
 
+  /**
+   * An optional array of details.
+   */
+  details?: string[];
+
 }
 
 /**
@@ -31,11 +36,13 @@ export interface IServiceError {
 export function buildServiceError (
   errorString: string = null,
   message: string = null,
-  restCode: number = null
+  restCode: number = null,
+  details: string[] = []
 ): IServiceError {
   return <IServiceError>{
     errorString: errorString,
     message: message,
-    restCode: restCode
+    restCode: restCode,
+    details: details
   };
 }

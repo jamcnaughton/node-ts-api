@@ -33,7 +33,10 @@ export class TranslationController {
     @Res() res: Response,
     @Param('tenant') tenant: string,
   ): Bluebird<Response> {
-    return translationService.readFrontEndSignInTranslations(tenant)
+    return Bluebird.resolve()
+    .then(
+      () => translationService.readFrontEndSignInTranslations(tenant)
+    )
     .then(
       (translations: {}) => sendResultsResponse(res, {translations: translations})
     )
@@ -56,13 +59,16 @@ export class TranslationController {
     @Res() res: Response,
     @Param('tenant') tenant: string,
   ): Bluebird<Response> {
-    return translationService.readFrontEndReferenceTranslations(tenant)
-      .then(
-        (translations: {}) => sendResultsResponse(res, {translations: translations})
-      )
-      .catch(
-        (err: Error) => sendErrorResponse(res, err)
-      );
+    return Bluebird.resolve()
+    .then(
+      () => translationService.readFrontEndReferenceTranslations(tenant)
+    )
+    .then(
+      (translations: {}) => sendResultsResponse(res, {translations: translations})
+    )
+    .catch(
+      (err: Error) => sendErrorResponse(res, err)
+    );
   }
 
   /**
@@ -81,7 +87,10 @@ export class TranslationController {
     @Param('languageid') languageId: string,
     @Tenant() tenant: string
   ): Bluebird<Response> {
-    return translationService.readFrontEndTenantTranslations(languageId, tenant)
+    return Bluebird.resolve()
+    .then(
+      () => translationService.readFrontEndTenantTranslations(languageId, tenant)
+    )
     .then(
       (translations: {}) => sendResultsResponse(res, {translations: translations})
     )
