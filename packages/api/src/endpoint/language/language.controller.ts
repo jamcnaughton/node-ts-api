@@ -24,9 +24,9 @@ export class LanguageController {
    * @param tenant The tenant the languages to return must belong to.
    * @returns A promise which attempts to find all the languages available.
    *
-   * @api {get} /languages List Languages
+   * @api {get} /language List Languages
    * @apiName httpGetLanguagesForTenant
-   * @apiGroup Languages
+   * @apiGroup Language
    * @apiPermission anyone
    *
    * @apiSuccessExample {json} Success-Response:

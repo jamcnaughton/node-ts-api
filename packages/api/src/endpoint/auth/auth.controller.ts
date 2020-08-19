@@ -13,38 +13,12 @@ import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
 // TODO Feature: Add tests for end point.
 
-// TODO Api Docs
-
 /**
  * Controller for authentication.
  */
 @JsonController('/auth')
 export class AuthController {
 
-    /**
-     * @api {post} /auth Authenticate
-     * @apiName PostAuth
-     * @apiGroup Auth
-     *
-     * @apiParam {String} email Users email.
-     * @apiParam {String} password Users password.
-     * @apiParam {String} [tenant] Users tenant.
-     *
-     * @apiSuccess {String} accessToken JWT token.
-     *
-     * @apiParamExample {json} Request-Example:
-     *     {
-     *       "email": "user@demo.com",
-     *       "password": "Passw0rd123",
-     *       "tenant": "demo",
-     *     }
-     *
-     * @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI..."
-     *     }
-     */
   /**
    * Manage request to log in.
    *
@@ -52,6 +26,28 @@ export class AuthController {
    * @param res The response to be sent back.
    * @param body The required body of the response.
    * @returns A promise to handle sending back the response.
+   *
+   * @api {post} /auth Authenticate
+   * @apiName httpPostAuth
+   * @apiGroup Auth
+   *
+   * @apiParam {Object} body Contains an email, password and tenant to try authenticating.
+   *
+   * @apiSuccess {String} JWT token.
+   *
+   * @apiParamExample {json} Request-Example:
+   *   {
+   *     "email": "user@demo.com",
+   *     "password": "Passw0rd123",
+   *     "tenant": "demo",
+   *   }
+   *
+   * @apiSuccessExample {json} Success-Response:
+   *   HTTP/1.1 200 OK
+   *   {
+   *     "token": "dgdfgDFGDFGDfgdfRTbjghjghjGHJGHJ..."
+   *   }
+   *
    */
   @Post()
   @UseBefore(Unauthorised)

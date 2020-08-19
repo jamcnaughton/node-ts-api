@@ -3,8 +3,6 @@
  * @module service
  */
 import * as Bluebird from 'bluebird';
-import {Operators} from 'sequelize';
-import {sequelize} from '../../model';
 import {Language} from '../../model/language';
 import {Translation} from '../../model/translation';
 import {languageService} from '../language';
@@ -63,76 +61,6 @@ export class TranslationService {
       }
     );
 
-
-  }
-
-  /**
-   * Returns all front-end translations for the sign-in pages for the supplied tenant.
-   *
-   * @param tenant The tenant the translations must belong to.
-   * @returns A promise which attempts to get the relevant translations in a flattened object.
-   */
-  public readFrontEndReferenceTranslations (tenant: string): Bluebird<{}> {
-    const op: Operators = sequelize.Op;
-
-    // Get relevant language IDs for the tenant.
-    return languageService.read(tenant)
-    .then(
-      (languages: Language[]) => {
-
-        // Get array of language IDs.
-        const languageIds: string[] = languages.map(
-          (value: Language) => value.id
-        );
-
-        // Returns a promise which attempts to get the relevant translations.
-        return Translation.findAll(
-          {
-            searchPath: `"${tenant}"`,
-            where: {
-              [op.and]: [
-                {
-                  [op.or]: [
-                    {
-                      translationKey: {
-                        [op.like]: `frontend-sign-in.title%`
-                      }
-                    },
-                    {
-                      translationKey: {
-                        [op.iLike]: `frontend-tenant.references%`
-                      }
-                    }
-                  ]
-                },
-                {
-                  languageId: languageIds
-                }
-              ]
-            }
-          }
-        )
-
-          // Flatten translations into a single object.
-          .then(
-            (translations: Translation[]) => {
-              const translationsObject = {};
-              for (const languageId of languageIds) {
-                const translationsForLangObject = {};
-                for (const translation of translations) {
-                  const translationKey = translation.translationKey
-                    .replace('frontend-tenant.', '')
-                    .replace('frontend-sign-in.', '');
-                  translationsForLangObject[translationKey] = translation.data;
-                }
-                translationsObject[languageId] = translationsForLangObject;
-              }
-              return translationsObject;
-            }
-          );
-
-      }
-    );
 
   }
 
