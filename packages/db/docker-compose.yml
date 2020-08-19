@@ -1,0 +1,25 @@
+version: "3"
+
+networks:
+  node-ts-api:
+    driver: bridge
+services:
+  postgres:
+    container_name: node-ts-api-postgres
+    environment:
+      - POSTGRES_DB=node-ts-api-dev
+      - POSTGRES_PASSWORD=database-password
+      - POSTGRES_USER=database-user
+      - TZ=Europe/London
+    image: postgres:11.1-alpine
+    networks:
+      - node-ts-api
+    ports:
+      - 5432:5432
+  redis:
+    container_name: node-ts-api-redis
+    image: redis:5.0.2-alpine
+    networks:
+      - node-ts-api
+    ports:
+      - 6379:6379

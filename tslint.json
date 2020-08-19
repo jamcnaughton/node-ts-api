@@ -7,13 +7,12 @@
       true,
       "check-space"
     ],
-    "component-class-suffix": true,
     "curly": true,
     "deprecation": {
       "severity": "warn"
     },
-    "directive-class-suffix": true,
     "eofline": true,
+    "forin": true,
     "import-blacklist": [
       true,
       "rxjs/Rx"
@@ -21,7 +20,7 @@
     "import-spacing": true,
     "indent": [
       true,
-      "tabs"
+      "spaces"
     ],
     "interface-over-type-literal": true,
     "label-position": true,
@@ -61,18 +60,14 @@
       true,
       "ignore-params"
     ],
-    "no-input-rename": true,
     "no-misused-new": true,
     "no-non-null-assertion": true,
-    "no-output-on-prefix": true,
-    "no-output-rename": true,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
-    "no-unused-expression": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
@@ -88,6 +83,7 @@
       true,
       "single"
     ],
+    "radix": true,
     "semicolon": [
       true,
       "always"
@@ -95,6 +91,26 @@
     "triple-equals": [
       true,
       "allow-null-check"
+    ],
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "unified-signatures": true,
+    "variable-name": false,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
     ]
   }
 }

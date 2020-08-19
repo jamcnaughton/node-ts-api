@@ -1,0 +1,24 @@
+{
+  "id": {
+    "type": "{{Sequelize.UUID}}",
+    "defaultValue": "{{Sequelize.UUIDV4}}",
+    "allowNull": false,
+    "isUUID": 4,
+    "primaryKey": true,
+    "unique": true
+  },
+  "name": {
+    "allowNull": false,
+    "validate": {
+      "notEmpty": true
+    },
+    "type": "{{Sequelize.TEXT}}"
+  },
+  "code": {
+    "allowNull": false,
+    "validate": {
+      "notEmpty": true
+    },
+    "type": "{{Sequelize.TEXT}}"
+  }
+}

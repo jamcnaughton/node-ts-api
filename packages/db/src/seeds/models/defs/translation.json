@@ -1,0 +1,46 @@
+{
+  "id": {
+    "isUUID": 4,
+    "primaryKey": true,
+    "unique": true,
+    "allowNull": false,
+    "defaultValue": "{{Sequelize.UUIDV4}}",
+    "type": "{{Sequelize.UUID}}"
+  },
+  "data": {
+    "validate": {
+      "notEmpty": true
+    },
+    "type": "{{Sequelize.TEXT}}"
+  },
+  "languageId": {
+    "allowNull": true,
+    "isUUID": 4,
+    "references": {
+      "model": {
+        "tableName": "Language",
+        "schema": "{{TENANT}}"
+      },
+      "key": "id"
+    },
+    "type": "{{Sequelize.UUID}}"
+  },
+  "translationKey": {
+    "allowNull": true,
+    "type": "{{Sequelize.STRING}}"
+  },
+  "frontendSignIn": {
+    "validate": {
+      "notEmpty": true
+    },
+    "defaultValue": false,
+    "type": "{{Sequelize.BOOLEAN}}"
+  },
+  "frontendTenant": {
+    "validate": {
+      "notEmpty": true
+    },
+    "defaultValue": false,
+    "type": "{{Sequelize.BOOLEAN}}"
+  }
+}

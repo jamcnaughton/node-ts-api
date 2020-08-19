@@ -1,0 +1,20 @@
+[
+  {
+    "id": "94100b1a-e2e3-4832-a37e-1c6ef7b8dc3d",
+    "password": "$2a$10$LxGS2YmjHWU2ew/.lrV0bOI1/g5PxAOPI0CfeZ52x8tNKMBGHiugC",
+    "passwordSalt": "$2a$10$LxGS2YmjHWU2ew/.lrV0bO$2a$10$LxGS2YmjHWU2ew/.lrV0bO",
+    "firstName": "admin",
+    "surname": "admin",
+    "email": "admin@test-node-ts-api.com",
+    "preferredLanguageId": "1c732e2a-6114-4807-8f67-92d84db2d5ed"
+  },
+  {
+    "id": "7a9b6b52-ea53-4f65-8d4f-5b3957bf3f69",
+    "password": "$2a$10$LxGS2YmjHWU2ew/.lrV0bOI1/g5PxAOPI0CfeZ52x8tNKMBGHiugC",
+    "passwordSalt": "$2a$10$LxGS2YmjHWU2ew/.lrV0bO$2a$10$LxGS2YmjHWU2ew/.lrV0bO",
+    "firstName": "user",
+    "surname": "user",
+    "email": "user@test-node-ts-api.com",
+    "preferredLanguageId": "1c732e2a-6114-4807-8f67-92d84db2d5ed"
+  }
+]
