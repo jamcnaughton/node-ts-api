@@ -19,7 +19,6 @@ import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 @JsonController('/translation')
 export class TranslationController {
 
-  
   /**
    * Get front-end translations for the sign-in pages.
    *
@@ -34,8 +33,6 @@ export class TranslationController {
     @Res() res: Response,
     @Param('tenant') tenant: string,
   ): Bluebird<Response> {
-
-    // Return a promise which attempts to get all the relevant translations.
     return translationService.readFrontEndSignInTranslations(tenant)
     .then(
       (translations: {}) => sendResultsResponse(res, {translations: translations})
@@ -43,7 +40,6 @@ export class TranslationController {
     .catch(
       (err: Error) => sendErrorResponse(res, err)
     );
-
   }
 
   /**
@@ -60,8 +56,6 @@ export class TranslationController {
     @Res() res: Response,
     @Param('tenant') tenant: string,
   ): Bluebird<Response> {
-
-    // Return a promise which attempts to get all the relevant translations.
     return translationService.readFrontEndReferenceTranslations(tenant)
       .then(
         (translations: {}) => sendResultsResponse(res, {translations: translations})
@@ -69,7 +63,6 @@ export class TranslationController {
       .catch(
         (err: Error) => sendErrorResponse(res, err)
       );
-
   }
 
   /**
@@ -80,7 +73,7 @@ export class TranslationController {
    * @param tenant The tenant the translations to return must belong to.
    * @returns A promise which attempts to get all the relevant translations.
    */
-  @Authorized(['user', 'hr', 'uber-admin', 'admin', 'manager'])
+  @Authorized(['user', 'admin'])
   @Get(`/tenant/:languageid`)
   public httpGetFrontEndTenantTranslations (
     @Req() _: Request,
@@ -88,8 +81,6 @@ export class TranslationController {
     @Param('languageid') languageId: string,
     @Tenant() tenant: string
   ): Bluebird<Response> {
-
-    // Return a promise which attempts to get all the relevant translations.
     return translationService.readFrontEndTenantTranslations(languageId, tenant)
     .then(
       (translations: {}) => sendResultsResponse(res, {translations: translations})
@@ -97,7 +88,6 @@ export class TranslationController {
     .catch(
       (err: Error) => sendErrorResponse(res, err)
     );
-
   }
 
 }

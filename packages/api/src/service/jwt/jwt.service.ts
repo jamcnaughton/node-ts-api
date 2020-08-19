@@ -23,7 +23,7 @@ export class JwtService {
    * @param payload An object holding JWT attributes.
    * @returns A promise which builds the JWT and returns it.
    */
-  public createToken (payload: IJwtAttributes): Bluebird<Object> {
+  public createToken (payload: IJwtAttributes): Bluebird<string> {
 
     // Returns a promise which builds the JWT and returns it.
     return new Bluebird(

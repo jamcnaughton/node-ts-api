@@ -5,21 +5,9 @@
 import * as Bluebird from 'bluebird';
 import {Request, Response} from 'express';
 import {Body, JsonController, Post, Req, Res, UseBefore} from 'routing-controllers';
-import {config} from '../../config';
 import {Unauthorised} from '../../middleware/authentication';
-import {User} from '../../model/user';
-import {jwtService} from '../../service/jwt';
-import {userService} from '../../service/user';
-import {buildServiceError, sendErrorResponse, sendResultsResponse} from '../../utilities/response';
-
-/**
- * An interface for authorisation controller message contents to conform to.
- */
-export interface IAuth {
-  email: string;
-  password: string;
-  tenant?: string;
-}
+import {authService} from '../../service/auth';
+import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
 // TODO Feature: Add more auth end points for handling sign ups and password resets.
 
@@ -70,83 +58,11 @@ export class AuthController {
   public httpPostAuth (
     @Req() _: Request,
     @Res() res: Response,
-    @Body({
-      required: true
-    }) body: IAuth
+    @Body({required: true}) body: {}
   ): Bluebird<void | Response> {
-
-    // TODO Move all this logic into an auth service.
-
-    // Check user has not exceeded log in attempts
-    return userService.getLoginAttempts(body.email)
+    return authService.attemptAuthentication(body)
     .then(
-      (attempts: number) => {
-        if (attempts >= config.accountSecurity.attemptsLimit) {
-          throw buildServiceError('login-attempts-exceeded', 'User has attempted to log in too many times', 429);
-        }
-      }
-    )
-
-    // Attempt to the user.
-    .then(
-      () => userService.authenticate(body.email, body.tenant)
-    )
-    .then(
-      (user: User) => {
-
-        // If no valid user is supplied return an error.
-        if (!user) {
-          return userService.setFailedAttempt(body.email)
-          .then(
-            () => {
-              throw buildServiceError('user-not-found', 'No user with matching e-mail and password found', 404);
-            }
-          );
-        }
-
-        // Return a promise which authenticates the user.
-        return user.verifyPassword(body.password, user.password)
-        .then(
-          (authenticated: boolean) => {
-
-            // Verify the password.
-            if (!authenticated) {
-
-              // Return an error if the user is not authenticated at this point.
-              return userService.setFailedAttempt(user.email)
-              .then(
-                () => {
-                  throw buildServiceError('user-not-found', 'No user with matching e-mail and password found', 404);
-                }
-              );
-
-            } else {
-
-              // Get roles.
-              const roles: any[] = [];
-              for (const role of user.roles) {
-                roles.push(role.name);
-              }
-
-              // Return a promise which attempts to clear the users failed logins on successful login.
-              return userService.clearFailedAttempts(user.email)
-              .then(
-                () => jwtService.createToken(
-                  {
-                    id: user.id,
-                    email: user.email,
-                    roles: roles,
-                    tenant: body.tenant
-                  }
-                )
-                .then(
-                  (token: string) => sendResultsResponse(res, {token: token})
-                )
-              );
-            }
-          }
-        );
-      }
+      (token: string) => sendResultsResponse(res, {token: token})
     )
     .catch(
       (err: Error) => sendErrorResponse(res, err)
