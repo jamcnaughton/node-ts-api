@@ -2,8 +2,14 @@
  * @packageDocumentation
  * @module decorators
  */
-import {Request} from 'express';
-import {Action, createParamDecorator} from 'routing-controllers';
+import {
+  Request,
+  Response
+} from 'express';
+import {
+  Action,
+  createParamDecorator
+} from 'routing-controllers';
 import {IJwtAttributes} from '../../model/jwt';
 import {jwtService} from '../../service/jwt';
 import {redisService} from '../../service/redis';
@@ -16,25 +22,27 @@ import {redisService} from '../../service/redis';
 export function Tenant (): Function {
 
   // Returns a custom parameter decorator that check the tenant's validity.
-  return createParamDecorator(
-    {
-      required: true,
-      value: (action: Action): Promise<string | void> => {
+  return createParamDecorator({
+    required: true,
+    value: (action: Action): Promise<string | void> => {
 
-        // Get request and response.
-        const req: Request = action.request;
+      // Get request and response.
+      const req: Request = action.request;
+      const res: Response = action.response;
 
-        // Define tenant string.
-        let tenant: string;
-        if (req.query && req.query.tenant) {
-          tenant = req.query.tenant.toString();
-        }
-        if (req.body && req.body.tenant) {
-          tenant = req.body.tenant;
-        }
+      // Define tenant string.
+      let tenant: string;
 
-        // Return a promise which checks the supplied token is valid and gets the tenant from there.
-        return jwtService.readToken(req)
+      if (req.query && req.query.tenant) {
+        tenant = <string>(req.query.tenant);
+      }
+      if (req.body && req.body.tenant) {
+        tenant = req.body.tenant;
+      }
+
+      // Return a promise which checks the supplied token is valid and gets the tenant from there.
+      return jwtService
+        .readToken(req)
         .then(
           (token: IJwtAttributes) => token
         )
@@ -51,30 +59,32 @@ export function Tenant (): Function {
 
             // Return an error if there is no tenant.
             if (!tenant) {
-              tenant = null;
+              res.append('Tenant-Error', 'invalidtenant');
+              tenant = 'invalidtenant';
             }
 
             // Return a promise which checks the tenant is in the Redis data store.
-            return redisService.read('tenants')
-            .then(
-              (tenants: string) => {
+            return redisService
+              .read('tenants')
+              .then(
+                (tenants: string) => {
 
-                // Return an error if tenant isn't in the Redis data store.
-                if (tenants && !tenants.includes(tenant)) {
-                  tenant = null;
+                  // Return an error if tenant isn't in the Redis data store.
+                  if (tenants && !tenants.includes(tenant)) {
+                    res.append('Tenant-Error', 'invalidtenant');
+                    tenant = 'invalidtenant';
+                  }
+
+                  // Returns the valid tenant.
+                  return tenant;
+
                 }
-
-                // Returns the valid tenant.
-                return tenant;
-
-              }
-            );
+              );
 
           }
         );
 
-      }
     }
-  );
+  });
 
 }

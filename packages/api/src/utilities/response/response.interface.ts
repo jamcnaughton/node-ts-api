@@ -2,13 +2,15 @@
  * @packageDocumentation
  * @module utilities
  */
+import * as Sequelize from 'sequelize';
 import * as uuidv4 from 'uuid/v4';
-import {buildServiceError, IServiceError} from './service-error.interface';
+import {IPaginationInstance} from '../pagination';
+import {appendToServiceError, buildServiceErrorDirect, IServiceError, unpackSequelizeErrors} from '../service-error';
 
 /**
- * An interface representing structured responses to send to the front end.
+ * An interface representing the basics of a structured response to send to the front end.
  */
-export interface IResponse {
+export interface IResponseShell {
 
   /**
    * A unique ID for the responses.
@@ -36,14 +38,43 @@ export interface IResponse {
   messages?: string[];
 
   /**
-   * Details on the error related to the response.
+   * Information on the error related to the response.
    */
-  error?: IServiceError;
+  errorInfo?: IServiceError;
+
+}
+
+/**
+ * An interface representing structured responses to send to the front end.
+ */
+export interface IResponse<T> extends IResponseShell {
 
   /**
    * The payload of the response.
    */
-  result?: {};
+  payload?: IResponsePayload<T>;
+
+}
+
+/**
+ * An interface representing structured responses results.
+ */
+export interface IResponsePayload<T> {
+
+  /**
+   * The single payload of the response.
+   */
+  result?: T;
+
+  /**
+   * The array payload of the response.
+   */
+  results?: T[];
+
+  /**
+   * The paginated array payload of the response.
+   */
+  paginatedResults?: IPaginationInstance<T>;
 
 }
 
@@ -75,20 +106,25 @@ const statuses: any = {
  * @param messages The message to include in the response.
  * @returns An error response object.
  */
-export function buildResultsResponse (
-  results: {},
+export function buildResultsResponse<T> (
+  results: IResponsePayload<T>,
   code: number = 200,
   status: string = null,
   messages: string[] = []
-): IResponse {
-  return <IResponse>{
+): IResponse<T> {
+
+  // Build the response.
+  const response: IResponse<T> = {
     id: uuidv4(),
     code: code,
     status: status ? status : statuses[code],
     timestamp: new Date().toISOString(),
     messages: messages,
-    results: results
+    payload: results
   };
+
+  // Return the response.
+  return response;
 
 }
 
@@ -99,17 +135,36 @@ export function buildResultsResponse (
  * @param code The status code to be returned in the response.
  * @returns An error response object.
  */
-export function buildErrorResponse (
-  error: Error | IServiceError,
+export function buildErrorResponse<T> (
+  error: Error | IServiceError | Sequelize.UniqueConstraintError | Sequelize.ValidationError,
   code: number = 500
-): IResponse {
+): IResponse<T> {
+
+  // Convert sequelize related error to service error.
+  if (error.hasOwnProperty('errors')) {
+
+    // Establish the rest code 422 (unprocessable entity) in a new error.
+    const newError = buildServiceErrorDirect(422, 'Database query error');
+
+    // Get the sequelize errors and put them into the details.
+    for (const sequelizeError of (<Sequelize.UniqueConstraintError>error).errors) {
+      const errorInfo = unpackSequelizeErrors(sequelizeError.message);
+      appendToServiceError(newError, errorInfo.code, errorInfo.message);
+    }
+
+    // Assign the new error to be returned.
+    error = newError;
+
+  }
 
   // Convert typical error to service error.
   if (!error['restCode']) {
-    error = buildServiceError(
+    error = buildServiceErrorDirect(
+      code,
+      '',
+      '',
       (<Error>error).name,
       (<Error>error).message,
-      code
     );
   }
 
@@ -117,12 +172,12 @@ export function buildErrorResponse (
   code = (<IServiceError>error).restCode;
 
   // Return the response object.
-  return <IResponse>{
+  return <IResponse<T>>{
     id: uuidv4(),
     code: code,
     status: statuses[code],
     timestamp: new Date().toISOString(),
-    error: error
+    errorInfo: error
   };
 
 }

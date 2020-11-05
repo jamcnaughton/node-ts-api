@@ -6,8 +6,9 @@ import * as Bluebird from 'bluebird';
 import {Request} from 'express';
 import {sign, verify} from 'jsonwebtoken';
 import {config} from '../../config';
+import {JWTErrorCodes} from '../../error-codes/jwt';
 import {IJwtAttributes} from '../../model/jwt';
-import {buildServiceError} from '../../utilities/response';
+import {buildServiceError} from '../../utilities/service-error';
 
 /**
  * Service class for handling JWT related actions.
@@ -56,7 +57,7 @@ export class JwtService {
 
         // Check there is a JWT present, throw an error if not.
         if (!req.headers.hasOwnProperty('authorization')) {
-          throw buildServiceError('no-jwt', 'No JWT present', 401);
+          throw buildServiceError(401, 'Unable to authorize', 'ERRJWT000', JWTErrorCodes);
         }
 
         // Get the token from the headers.
@@ -65,7 +66,7 @@ export class JwtService {
 
         // Check the token length is valid.
         if (token.length !== 2) {
-          throw buildServiceError('no-jwt', 'No JWT present', 400);
+          throw buildServiceError(401, 'Unable to authorize', 'ERRJWT002', JWTErrorCodes);
         }
 
         // Check the token structure is valid.

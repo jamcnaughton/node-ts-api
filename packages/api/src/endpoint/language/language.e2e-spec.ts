@@ -51,11 +51,11 @@ describe(
           () => app.get('/api/1.0/language?tenant=demo').expect(
             (res: SuperTest.Response) => {
               expect(res.status).to.be.a('number').equal(200);
-              expect(res.body).to.have.property('results');
-              expect(res.body['results']).to.have.property('languages');
-              expect(res.body['results']['languages']).to.not.have.lengthOf(0);
-              expect(res.body['results']['languages'][0]).to.have.property('name');
-              expect(res.body['results']['languages'][0]).to.have.property('code');
+              expect(res.body).to.have.property('payload');
+              expect(res.body['payload']).to.have.property('results');
+              expect(res.body['payload']['results']).to.not.have.lengthOf(0);
+              expect(res.body['payload']['results'][0]).to.have.property('name');
+              expect(res.body['payload']['results'][0]).to.have.property('code');
             }
           )
         );

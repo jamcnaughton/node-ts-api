@@ -23,7 +23,7 @@ import {UserHasRole} from '../user-has-role';
 @Table
 export class Role extends Model<Role> {
 
-  
+
   /**
    * The unique ID of the role.
    */
