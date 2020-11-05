@@ -1,0 +1,143 @@
+/**
+ * @packageDocumentation
+ * @module migrations
+ */
+import { QueryInterface, Sequelize } from 'sequelize';
+import { DemoBackupHelper } from '../helpers/demo-backup.helper';
+import { MigrationHelper } from '../helpers/migration.helper';
+
+/**
+ * A change for the database.
+ */
+module.exports.up = async (queryInterface: QueryInterface, _: Sequelize, done: Function) => {
+
+  // Create transaction.
+  const transaction = await MigrationHelper.getSequelize().transaction();
+  try {
+
+    // Run restore of demo tenant.
+    await DemoBackupHelper.restore(transaction, queryInterface);
+
+    // This is where the migration magic would usually happen.
+
+    // Get all tenants.
+    const tenants = await MigrationHelper.getTenants(transaction, queryInterface);
+
+    // Get a table.
+    const tableModel = await MigrationHelper.getTable(transaction, queryInterface, 'TableName', tenants[0]);
+
+    // Perform for all tenants asynchronously.
+    await MigrationHelper.forAllTenants(
+      tenants,
+      async (tenant: string) => {
+
+      }
+    );
+
+    // Add a column.
+    const columnAttributesObject = {};
+    await MigrationHelper.addColumn(
+      transaction,
+      queryInterface,
+      'TableName',
+      'ColumnName',
+      columnAttributesObject,
+      tenants
+    );
+
+    // Remove a column.
+    await MigrationHelper.removeColumn(
+      transaction,
+      queryInterface,
+      'TableName',
+      'ColumnName',
+      tenants
+    );
+
+    // Create a table.
+    const tableAttributeModel = {};
+    const newTableModel = await MigrationHelper.addTableToTenants(
+      transaction,
+      queryInterface,
+      'TableName',
+      tableAttributeModel,
+      tenants,
+      'TableToAddAfterInList'
+    );
+
+    // Remove a table.
+    await MigrationHelper.removeTableFromTenants(
+      transaction,
+      queryInterface,
+      'TableName',
+      tenants
+    );
+
+    // Add translations.
+    const nestedTranslationsObject = {};
+    await MigrationHelper.addTranslations(
+      transaction,
+      queryInterface,
+      nestedTranslationsObject,
+      tenants
+    );
+
+    // Get array of translation keys from nested translations object.
+    const arrayOfTranslationKeys = MigrationHelper.getTranslationKeys(nestedTranslationsObject);
+
+    // Remove translations.
+    await MigrationHelper.removeTranslations(
+      transaction,
+      queryInterface,
+      arrayOfTranslationKeys,
+      tenants
+    );
+
+    // Run backup of demo tenant.
+    await DemoBackupHelper.backup(transaction, queryInterface);
+
+    // Run the transaction.
+    await transaction.commit();
+
+  // Rollback if needed.
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+
+  // Complete migration.
+  done();
+
+};
+
+/**
+* A rollback of a change for the database.
+*/
+module.exports.down = async (queryInterface: QueryInterface, _: Sequelize, done: Function) => {
+
+  // Create transaction.
+  const transaction = await MigrationHelper.getSequelize().transaction();
+  try {
+
+    // Run restore of demo tenant.
+    await DemoBackupHelper.restore(transaction, queryInterface);
+
+    // This is where the migration undo-ing magic would usually happen.
+
+    // Run backup of demo tenant.
+    await DemoBackupHelper.backup(transaction, queryInterface);
+
+    // Run the transaction.
+    await transaction.commit();
+
+    // Rollback if needed.
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+
+  // Complete migration.
+  done();
+
+};
+
