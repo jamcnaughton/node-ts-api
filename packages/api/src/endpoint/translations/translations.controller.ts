@@ -6,7 +6,9 @@ import * as Bluebird from 'bluebird';
 import {Request, Response} from 'express';
 import {Authorized, Get, JsonController, Param, Req, Res} from 'routing-controllers';
 import {Tenant} from '../../decorators/tenant';
+import {TranslationErrorCodes} from '../../error-codes/translation';
 import {translationService} from '../../service/translation';
+import {ParamType, RequestValidationHelper} from '../../utilities/request';
 import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
 // TODO Feature: Add tests for end point.
@@ -61,6 +63,8 @@ export class TranslationController {
     @Param('tenant') tenant: string,
   ): Bluebird<Response> {
     return Bluebird.resolve()
+
+    // TODO Add validation and example error codes.
     .then(
       () => translationService.readFrontEndSignInTranslations(tenant)
     )
@@ -75,7 +79,7 @@ export class TranslationController {
   /**
    * Get front-end translations for the non-sign-in pages.
    *
-   * @param _ The request from the front end.
+   * @param req The request from the front end.
    * @param res The response to send back to the front end.
    * @param languageId The ID of the language to get translations for.
    * @param tenant The tenant the translations to return must belong to.
@@ -114,17 +118,24 @@ export class TranslationController {
   @Authorized(['user', 'admin'])
   @Get(`/tenant/:languageid`)
   public httpGetFrontEndTenantTranslations (
-    @Req() _: Request,
+    @Req() req: Request,
     @Res() res: Response,
     @Param('languageid') languageId: string,
     @Tenant() tenant: string
   ): Bluebird<Response> {
     return Bluebird.resolve()
     .then(
+      () => {
+        const requestValidationHelper = new RequestValidationHelper(TranslationErrorCodes, 'Unable to get translations for language', req);
+        requestValidationHelper.isGuid('languageId', 'ERRTRANS000', ParamType.Route);
+        requestValidationHelper.validate();
+      }
+    )
+    .then(
       () => translationService.readFrontEndTenantTranslations(languageId, tenant)
     )
     .then(
-      (translations: {}) => sendResultsResponse(res, {translations: translations})
+      (translations: {}) => sendResultsResponse(res, req, {result: translations})
     )
     .catch(
       (err: Error) => sendErrorResponse(res, err)

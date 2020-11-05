@@ -4,8 +4,9 @@
  */
 import * as Bluebird from 'bluebird';
 import {config} from '../../config';
+import {AuthErrorCodes} from '../../error-codes/auth';
 import {User} from '../../model/user';
-import {buildServiceError, IServiceError} from '../../utilities/response';
+import {buildServiceError} from '../../utilities/service-error';
 import {jwtService} from '../jwt';
 import {userService} from '../user';
 
@@ -13,19 +14,6 @@ import {userService} from '../user';
  * Service class for handling authorisation related actions.
  */
 export class AuthService {
-
-  /**
-   * Errors to throw when authenticating.
-   */
-  private authErrors = new Map<String, IServiceError>(
-    [
-      ['no-email', buildServiceError('no-email-provided', 'Email not provided', 400)],
-      ['no-password', buildServiceError('no-password-provided', 'Password not provided', 400)],
-      ['no-tenant', buildServiceError('no-tenant-provided', 'Tenant not provided', 400)],
-      ['attempts-exceeded', buildServiceError('login-attempts-exceeded', 'User has attempted to log in too many times', 429)],
-      ['user-not-found', buildServiceError('user-not-found', 'No user with matching e-mail and password found', 404)]
-    ]
-  );
 
   /**
    * Attempt to authenticate a user with provided credentials.
@@ -36,11 +24,6 @@ export class AuthService {
   public attemptAuthentication (body: {}): Bluebird<string> {
 
     // Get variables from body.
-    for (const field in ['email', 'password', 'tenant']) {
-      if (!body[field]) {
-        throw this.authErrors[`no-${field}`];
-      }
-    }
     const email = body['email'];
     const password = body['password'];
     const tenant = body['tenant'];
@@ -50,7 +33,7 @@ export class AuthService {
     .then(
       (attempts: number) => {
         if (attempts >= config.accountSecurity.attemptsLimit) {
-          throw this.authErrors['attempts-exceeded'];
+          throw buildServiceError(429, 'Unable to authenticate', 'ERRAUTH004', AuthErrorCodes);
         }
       }
     )
@@ -67,7 +50,7 @@ export class AuthService {
           return userService.setFailedAttempt(email)
           .then(
             () => {
-              throw this.authErrors['user-not-found'];
+              throw buildServiceError(401, 'Unable to authenticate', 'ERRAUTH003', AuthErrorCodes);
             }
           );
         }
@@ -84,7 +67,7 @@ export class AuthService {
               return userService.setFailedAttempt(user.email)
               .then(
                 () => {
-                  throw this.authErrors['user-not-found'];
+                  throw buildServiceError(401, 'Unable to authenticate', 'ERRAUTH003', AuthErrorCodes);
                 }
               );
 
