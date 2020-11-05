@@ -4,7 +4,9 @@
  */
 import {NextFunction, Request, Response} from 'express';
 import {ExpressMiddlewareInterface} from 'routing-controllers';
-import {buildServiceError, sendErrorResponse} from '../../utilities/response';
+import {AuthErrorCodes} from '../../error-codes/auth';
+import {sendErrorResponse} from '../../utilities/response';
+import {buildServiceError} from '../../utilities/service-error';
 
 /**
  * Class for checking that a user making a request is authorised.
@@ -23,8 +25,7 @@ export class Unauthorised implements ExpressMiddlewareInterface {
 
     // If the user is unauthorised then return an error response.
     if (req.headers.authorization) {
-
-      const serviceError = buildServiceError('unautorised', 'You are not authorised to access this resource', 401);
+      const serviceError = buildServiceError(403, 'User is unauthorised', 'ERRAUTH005', AuthErrorCodes);
       return sendErrorResponse(res, serviceError);
     }
 

@@ -15,10 +15,6 @@ import {sendErrorResponse, sendResultsResponse} from '../../utilities/response';
 
 // TODO Feature: Add tests for end point.
 
-// TODO Move API docs to separate files.
-
-// TODO Fix errors and examples in docs.
-
 /**
  * Controller for authentication.
  */

@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module endpoint
  */
-import {TranslationController} from './translations';
-import {LanguageController} from './language';
 import {AuthController} from './auth';
+import {LanguageController} from './language';
+import {TranslationController} from './translations';
 
 /**
  * All of the back-end controllers.

@@ -22,7 +22,7 @@ import {
 @Table
 export class Template extends Model<Template> {
 
-  
+
   /**
    * A unique ID representing the template.
    */

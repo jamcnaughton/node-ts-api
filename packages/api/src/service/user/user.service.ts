@@ -3,11 +3,11 @@
  * @module service
  */
 import * as Bluebird from 'bluebird';
+import {config} from '../../config/config.development';
 import {IJwtAttributes} from '../../model/jwt';
 import {Role} from '../../model/role';
 import {User} from '../../model/user';
 import {redisService} from '../redis';
-import {config} from '../../config/config.development';
 
 /**
  * Service class for handling user related actions.

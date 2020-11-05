@@ -12,7 +12,6 @@ import {languageService} from '../language';
  */
 export class TranslationService {
 
-  
   /**
    * Returns all front-end translations for the sign-in pages for the supplied tenant.
    *

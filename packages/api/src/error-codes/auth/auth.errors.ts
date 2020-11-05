@@ -12,5 +12,9 @@ export const AuthErrorCodes: IServiceErrorCode = {
   ERRAUTH001: 'password is either missing or an empty string',
   ERRAUTH002: 'tenant is either missing or an empty string',
   ERRAUTH003: 'email address and password combination failed',
-  ERRAUTH004: 'user is locked out - login attempts limit exceeded'
+  ERRAUTH004: 'user is locked out - login attempts limit exceeded',
+  ERRAUTH005: 'authorisation is required for this resource',
+  ERRAUTH006: 'invalid password',
+  ERRAUTH007: 'invalid first name',
+  ERRAUTH008: 'invalid surname'
 };

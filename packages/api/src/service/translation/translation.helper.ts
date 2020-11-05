@@ -11,7 +11,7 @@ import {translationService} from './translation.service';
  */
 export class TranslationHelper {
 
-  
+
   /**
    * The preferred language of the user this helper instance is affiliated with.
    */
@@ -22,7 +22,7 @@ export class TranslationHelper {
    */
   private translations: string[] = [];
 
-  
+
   /**
    * Prepares an instance of the translation helper.
    *
@@ -34,7 +34,7 @@ export class TranslationHelper {
     private tenant: string
   ) {}
 
-  
+
   /**
    * Get the user's preferred language.
    *

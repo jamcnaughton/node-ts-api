@@ -70,7 +70,7 @@ export function sendErrorResponse (
     error = buildServiceError(
       400,
       'Request made for invalid tenant',
-      'ERRTENANTS005',
+      'ERRTENANTS000',
       TenantErrorCodes
     );
   }

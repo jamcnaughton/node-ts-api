@@ -20,7 +20,7 @@ import {User} from '../user';
 @Table
 export class UserHasRole extends Model<UserHasRole> {
 
-  
+
   /**
    * The ID of a role.
    */

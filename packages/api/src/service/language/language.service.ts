@@ -4,7 +4,6 @@
  */
 import * as Bluebird from 'bluebird';
 import {Language} from '../../model/language';
-import {buildServiceError} from '../../utilities/response';
 
 /**
  * Service class for handling language related actions.
@@ -18,11 +17,6 @@ export class LanguageService {
    * @returns A promise which returns several language models.
    */
   public read (tenant: string): Bluebird<Language[]> {
-
-    // Check tenant is valid.
-    if (tenant === null) {
-      throw buildServiceError('invalid-tenant', 'No valid tenant supplied', 400);
-    }
 
     // Return a promise which returns several language models.
     return Language.findAll(

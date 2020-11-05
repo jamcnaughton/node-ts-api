@@ -22,9 +22,10 @@ import {
   Table,
   Unique
 } from 'sequelize-typescript';
+import {AuthErrorCodes} from '../../error-codes/auth';
 import {encryptionService} from '../../service/encryption';
 import {RegexUtility} from '../../utilities/regex';
-import {buildServiceError} from '../../utilities/response';
+import {packSequelizeErrors} from '../../utilities/service-error';
 import {Language} from '../language';
 import {Role} from '../role';
 import {UserHasRole} from '../user-has-role';
@@ -51,7 +52,7 @@ export class User extends Model<User> {
    */
   @Is('user', (value: string) => {
     if (!RegExp(RegexUtility.password).test(value)) {
-      throw buildServiceError('invalid-password', 'Invalid password supplied', 422);
+      throw { message: packSequelizeErrors('ERRAUTH006', AuthErrorCodes)};
     }
   })
   @Column
@@ -68,7 +69,7 @@ export class User extends Model<User> {
    */
   @Is('user', (value: string) => {
     if (!RegExp(RegexUtility.name).test(value)) {
-      throw buildServiceError('invalid-first-name', 'Invalid first name supplied', 422);
+      throw { message: packSequelizeErrors('ERRAUTH007', AuthErrorCodes)};
     }
   })
   @Column
@@ -79,7 +80,7 @@ export class User extends Model<User> {
    */
   @Is('user', (value: string) => {
     if (!RegExp(RegexUtility.name).test(value)) {
-      throw buildServiceError('invalid-surname', 'Invalid surname supplied', 422);
+      throw { message: packSequelizeErrors('ERRAUTH008', AuthErrorCodes)};
     }
   })
   @Column
