@@ -50,7 +50,7 @@ export class SquashUtility {
         console.log('Starting migration squash...');
 
         // Establish path for backend/packages/db/src/.
-        const path = `${__dirname}/../../../db/src`;
+        const path = `${__dirname}/../../../db`;
 
         // Delete contents of tenant info list.
         fs.unlinkSync(`${path}/seeds/seed-list.json`);
@@ -190,10 +190,10 @@ export class SquashUtility {
                 );
 
                 // Delete all but the first migration.
-                const migrationPath = `${path}/migrations`;
+                const migrationPath = `${path}/src/migrations`;
                 const migrationFiles = fs.readdirSync(migrationPath);
                 for (const migrationFile of migrationFiles) {
-                  if (migrationFile !== '20200101000000-initial-seed.js') {
+                  if (migrationFile !== '20200101000000-initial-seed.ts') {
                     fs.unlinkSync(`${migrationPath}/${migrationFile}`);
                   }
                 }
