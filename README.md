@@ -67,10 +67,22 @@ npm run db:migrate
 npm run db:migrate:back
 ```
 
+### Undo then redo last update to database
+
+```bash
+npm run db:migrate:redo
+```
+
 ### Wipe database
 
 ```bash
 npm run db:wipe:dev
+```
+
+### Wipe database and run all migrations again.
+
+```bash
+npm run db:migrate:repop
 ```
 
 ### Convert all current migrations into a seed
