@@ -145,14 +145,14 @@ export class MigrationHelper {
    * @param queryInterface The query interface object.
    * @param translations The multi-dimensional object containing translations.
    * @param tenants An array of the tenants to add the translations to.
-   * @param languages The specific languages to create the translations for if known.
+   * @param languageCodes The specific languages to create the translations for if known.
    */
   public static async addTranslations (
     transaction: Transaction,
     queryInterface: QueryInterface,
     translations: {},
     tenants: string[],
-    languageIds: string[] = []
+    languageCodes: string[] = []
   ) {
 
     // Loop through tenants.
@@ -160,22 +160,26 @@ export class MigrationHelper {
       tenants,
       async (tenant: string) => {
 
-        // Get available language IDs for tenant.
-        if (languageIds.length === 0) {
-          const languageModel = await this.getTable(transaction, queryInterface, 'Language', tenant);
-          const languages = await languageModel.findAll(
-            {
-              attributes: [
-                'id'
-              ],
-              searchPath: `"${tenant}"`,
-              logging: false,
-              transaction
-            }
-          );
-          for (const language of languages) {
-            languageIds.push(language.id);
+        // Get relevant language IDs for tenant.
+        const languageIds: string[] = [];
+        const languageModel = await this.getTable(transaction, queryInterface, 'Language', tenant);
+        const whereClause = {};
+        if (languageCodes.length > 0) {
+          whereClause['code'] = languageCodes;
+        }
+        const languages = await languageModel.findAll(
+          {
+            attributes: [
+              'id'
+            ],
+            searchPath: `"${tenant}"`,
+            logging: false,
+            where: whereClause,
+            transaction
           }
+        );
+        for (const language of languages) {
+          languageIds.push(language.id);
         }
 
         // Flatten translation object.
